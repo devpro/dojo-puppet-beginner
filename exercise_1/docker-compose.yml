@@ -1,0 +1,15 @@
+version: '3.5'
+
+services:
+  alpine:
+    build: ./alpine-latest
+    ports:
+      - 8056:80
+    container_name: dojo_puppet_alpine
+    networks:
+      - my-proxy-net
+
+networks:
+  my-proxy-net:
+    external:
+      name: custom_network
