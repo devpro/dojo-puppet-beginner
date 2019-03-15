@@ -1,0 +1,8 @@
+# Visual Studio folder (cache/options)
+.vs/
+
+# Development file (local)
+appsettings.Development.json
+
+# NPM generated lock file
+package-lock.json

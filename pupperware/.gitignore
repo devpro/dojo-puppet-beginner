@@ -1,0 +1,11 @@
+volumes/
+code/modules
+code/environments/*/modules
+puppet/
+puppetdb/
+puppetdb-postgres/
+serverdata/
+Gemfile.lock
+.bundle/
+.ruby-version
+docker-compose.override.yml

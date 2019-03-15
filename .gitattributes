@@ -1,0 +1,8 @@
+* text=auto eol=lf
+
+*.dist text eol=lf
+*.md text eol=lf
+*.pp text eol=lf
+*.yml text eol=lf
+
+Dockerfile text eol=lf

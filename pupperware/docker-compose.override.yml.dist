@@ -1,0 +1,16 @@
+version: '3.5'
+
+services:
+  puppet:
+    volumes:
+      - ./volumes/code:/etc/puppetlabs/code/
+      - ./volumes/puppet:/etc/puppetlabs/puppet/
+      - ./volumes/serverdata:/opt/puppetlabs/server/data/puppetserver/
+
+  postgres:
+    volumes:
+      - ./volumes/puppetdb-postgres/data:/var/lib/postgresql/data/
+
+  puppetdb:
+    volumes:
+      - ./volumes/puppetdb/ssl:/etc/puppetlabs/puppet/ssl/
