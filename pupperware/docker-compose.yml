@@ -1,0 +1,52 @@
+version: '3.5'
+
+services:
+  puppet:
+    hostname: puppet
+    #build: ./puppetserver
+    image: puppet/puppetserver
+    environment:
+      # DNS_ALT_NAMES must be set before starting the stack the first time,
+      # and must list all the names under which the puppetserver can be
+      # reached. 'puppet' must be one of them, otherwise puppetdb won't be
+      # able to get a cert. Add other names as a comma-separated list
+      - DNS_ALT_NAMES=puppet,${DNS_ALT_NAMES:-}
+      - PUPPETDB_SERVER_URLS=https://puppetdb:8081
+    ports:
+      - 8140:8140
+    networks:
+      - proxynet
+
+  postgres:
+    image: postgres:9.6
+    environment:
+      - POSTGRES_PASSWORD=puppetdb
+      - POSTGRES_USER=puppetdb
+      - POSTGRES_DB=puppetdb
+    ports:
+      - 5432:5432
+    # volumes can only be overriden by *target*, not *source*
+    # so define them in .override.yml and .windows.yml since target varies
+    # either /var/lib/postgresql/data/ on Linux or c:\data on Windows
+    # https://docs.docker.com/compose/extends/#adding-and-overriding-configuration
+    networks:
+      - proxynet
+
+  puppetdb:
+    hostname: puppetdb
+    image: puppet/puppetdb
+    environment:
+      - PUPPETDB_PASSWORD=puppetdb
+      - PUPPETDB_USER=puppetdb
+    ports:
+      - 8080
+      - 8081
+    depends_on:
+      - postgres
+      - puppet
+    networks:
+      - proxynet
+
+networks:
+  proxynet:
+    name: custom_network
